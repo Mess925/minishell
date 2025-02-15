@@ -94,7 +94,7 @@ char *expand_variable(t_process *proc)
 			proc->result = ft_strcjoin(proc->result, '$');
 			return proc->result;
 		}
-		printf("-----------------------------------------------------------\n");
+		// printf("-----------------------------------------------------------\n");
 		while (proc->str[proc->i] && !ft_strchr("\\\"\'$ ", proc->str[proc->i]))
 			proc->i++;
 		start = ft_strndup(start, proc->str + proc->i - start);

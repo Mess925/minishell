@@ -310,4 +310,6 @@ void signal_print_newline(int signal);
 void set_signals_interactive(void);
 void signal_reset_prompt(int signo);
 
+void free_env_array(char **env_array);
+
 #endif
