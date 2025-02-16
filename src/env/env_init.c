@@ -104,10 +104,10 @@ int	env_init(t_minishell *mini, char **env_array)
 	if (!env_array || !env_array[0])
 	{
 		ft_putendl_fd("env_array is empty or NULL.", 2);
-		return (1);
+		// return (1); // need to discuss
 	}
 	if (init_env_list(mini, env_array) != 0)
-		return (1);
+		// return (1);  //need to discuss
 		
 	mini->env2 = env_list_to_array(mini->env);
     if (!mini->env2)
