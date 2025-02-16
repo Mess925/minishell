@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: messs <messs@student.42.fr>                +#+  +:+       +#+        */
+/*   By: yocelynnns <yocelynnns@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 15:51:40 by hthant            #+#    #+#             */
-/*   Updated: 2025/02/15 21:50:50 by messs            ###   ########.fr       */
+/*   Updated: 2025/02/16 01:19:08 by yocelynnns       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <limits.h>
-// #include <linux/limits.h>
+#include <linux/limits.h>
 #include <readline/history.h>
 #include <readline/readline.h>
 #include <signal.h>
@@ -171,6 +171,7 @@ typedef struct s_var_process
 
 extern t_signal g_sig;
 
+void free_env_array(char **env_array);
 char *ft_strcjoin(char *str, char c);
 void stop_signals(void);
 int cmdchecks(t_ast_node *ast, t_minishell *mini);
@@ -219,8 +220,8 @@ int execute_left_command(int pipefd[2],
 int execute_right_command(int pipefd[2], t_ast_node *ast, t_minishell *mini);
 int execute_pipeline(t_minishell *mini, t_ast_node *ast);
 void fkoff(t_minishell *mini, t_cmd *m, int returnval);
-void pipe_exec_cmd(t_ast_node *ast, t_minishell *mini);
-int pipe_execute(t_ast_node *ast, char **env, t_minishell *mini, t_cmd *m);
+void	pipe_exec_cmd(t_ast_node *ast, t_minishell *mini);
+int	pipe_execute(t_ast_node *ast, char **env, t_minishell *mini, t_cmd *m);
 char *resize_buffer(char *content, size_t total_length,
 					size_t *current_size);
 ssize_t read_line(char *content, size_t total_length,
@@ -309,7 +310,5 @@ void set_signals_heredoc(void);
 void signal_print_newline(int signal);
 void set_signals_interactive(void);
 void signal_reset_prompt(int signo);
-
-void free_env_array(char **env_array);
 
 #endif
