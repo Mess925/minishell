@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 01:44:24 by messs             #+#    #+#             */
-/*   Updated: 2025/01/24 14:25:55 by hthant           ###   ########.fr       */
+/*   Updated: 2025/02/19 17:18:25 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,41 +53,33 @@ int update_oldpwd(t_env *env_list)
 	return (SUCCESS);
 }
 
-char *get_special_directory_path(int option, t_env *env_list)
+int handle_normal_cd(t_env *env_list, t_minishell *mini)
 {
-	if (option == 0)
-		return (get_env_variable(env_list, "HOME=", 5));
-	else if (option == 1)
-		return (get_env_variable(env_list, "OLDPWD=", 7));
-	return (NULL);
-}
-
-int navigate_to_special_dir(int option, t_env *env_list, t_minishell *mini)
-{
-	char *directory_path;
+	char *home;
 	int result;
 
-	directory_path = get_special_directory_path(option, env_list);
-	if (!directory_path)
+	home = get_env_variable(env_list, "HOME=", 5);
+	if (!home)
 	{
-		if (option == 0)
-			ft_putendl_fd("minishell: cd: HOME not set", STDERR);
-		else if (option == 1)
-			ft_putendl_fd("minishell: cd: OLDPWD not set", STDERR);
+		ft_putendl_fd("minishell: cd: HOME not set", STDERR_FILENO);
+		mini->exit = 1;
 		return (ERROR);
 	}
-	result = chdir(directory_path);
+	result = chdir(home);
+	free(home);
 	if (result != 0)
-		print_cd_error(directory_path, mini);
-	free(directory_path);
-	return (result);
+	{
+		print_cd_error(home,mini);
+		return (ERROR);
+	}
+	return (SUCCESS);
 }
 
 int ft_cd(char **arguments, t_env *env_list, t_minishell *mini)
 {
-	if (!arguments[1] || ft_strcmp(arguments[1], "~") == 0 || ft_strcmp(arguments[1], "-") == 0)
+	if (!arguments[1] || ft_strcmp(arguments[1], "") == 0)
+		return (handle_normal_cd(env_list, mini));
+	if (arguments[1] && ft_strcmp(arguments[1], "-") == 0)
 		return (handle_special_cd(arguments, env_list, mini));
-	if (arguments[1] && ft_strcmp(arguments[1], "") == 0)
-		return (SUCCESS);
 	return (handle_regular_cd(arguments[1], env_list, mini));
 }

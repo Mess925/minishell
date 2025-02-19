@@ -6,7 +6,7 @@
 /*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 18:32:08 by yocelynnns        #+#    #+#             */
-/*   Updated: 2025/02/04 19:16:25 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:12:37 by ysetiawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ char	*ft_strncpy(char *dest, char *src, unsigned int n)
 	return (dest);
 }
 
-int check_limit(int sign, unsigned long long result, t_minishell *mini,char *av)
+int	check_limit(int sign, unsigned long long result, t_minishell *mini, \
+	char *av)
 {
 	if ((sign == 1 && result > LONG_MAX)
 		|| (sign == -1 && result > -(unsigned long)LONG_MIN))
@@ -92,33 +93,7 @@ int check_limit(int sign, unsigned long long result, t_minishell *mini,char *av)
 		print_exit_error(av);
 		cleanup(mini);
 		exit(2);
-		return 1;
+		return (1);
 	}
-	return 0;
-}
-long	ft_atol(char *str, t_minishell *mini)
-{
-	unsigned long long	result;
-	int		sign;
-	int		i;
-
-	result = 0;
-	sign = 1;
-	i = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '+' || str[i] == '-')
-	{
-		if (str[i] == '-')
-			sign = -1;
-		i++;
-	}
-	while (str[i] && ft_isdigit(str[i]))
-	{
-		result = result * 10 + (str[i] - '0');
-		if(check_limit(sign,result,mini,str))
-			break;
-		i++;
-	}
-	return (result * sign);
+	return (0);
 }
