@@ -56,8 +56,8 @@ t_minishell	*init_minishell(char **env)
 	{
 		ft_putstr_fd("Error: Failed to initialize environment variables\n", \
 			STDERR);
-		free(mini);
-		return (NULL);
+		// free(mini);
+		// return (NULL);
 	}
 	return (mini);
 }

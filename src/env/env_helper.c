@@ -12,12 +12,30 @@
 
 #include "../inc/minishell.h"
 
+void	handle_empty_env(t_minishell *mini)
+{
+	mini->env = malloc(3 * sizeof(t_env));
+	if (!mini->env)
+		return;
+
+	mini->env[0].key = strdup("PWD");
+	mini->env[0].value = strdup("/home/hthant");
+
+	mini->env[1].key = strdup("SHLVL");
+	mini->env[1].value = strdup("1");
+
+	mini->env[2].key = strdup("_");
+	mini->env[2].value = strdup("/usr/bin/env");
+}
+
+
 int	env_init(t_minishell *mini, char **env_array)
 {
 	if (!env_array || !env_array[0])
 	{
 		ft_putendl_fd("env_array is empty or NULL.", 2);
-		return (1);
+		handle_empty_env(mini);
+		// return (1);
 	}
 	if (init_env_list(mini, env_array) != 0)
 		return (1);

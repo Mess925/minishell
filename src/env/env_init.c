@@ -25,7 +25,7 @@ t_env	*create_env_node(char *value)
 	new_node->value = ft_strdup(value);
 	if (!new_node->value)
 	{
-		ft_putendl_fd("ft_strdup failed for env value.", 2);
+		ft_putendl_fd("Failed for env value.", 2);
 		free(new_node->value);
 		free_env(new_node);
 		return (NULL);

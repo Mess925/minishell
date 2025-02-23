@@ -122,6 +122,7 @@ typedef struct s_env
 {
 	char			*value;
 	struct s_env	*next;
+	char			*key;
 }	t_env;
 
 typedef struct s_cmd
