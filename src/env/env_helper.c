@@ -12,7 +12,6 @@
 
 #include "../inc/minishell.h"
 
-<<<<<<< HEAD
 void	handle_empty_env(t_minishell *mini)
 {
 	mini->env = malloc(3 * sizeof(t_env));
@@ -38,23 +37,6 @@ int	env_init(t_minishell *mini, char **env_array)
 		handle_empty_env(mini);
 		// return (1);
 	}
-=======
-void	put_env_i(char **env_array)
-{
-	char	cwd[PATH_MAX];
-
-	getcwd(cwd, PATH_MAX);
-	env_array[0] = ft_strjoin("PWD=", cwd);
-	env_array[1] = ft_strdup("SHLVL=1");
-	env_array[2] = ft_strdup("_=/usr/bin/env");
-	env_array[3] = NULL;
-}
-
-int	env_init(t_minishell *mini, char **env_array)
-{
-	if (!env_array || !env_array[0])
-		put_env_i(env_array);
->>>>>>> 0212f4a445e27ba14db9ef4481938408690d1709
 	if (init_env_list(mini, env_array) != 0)
 		return (1);
 	// mini->env2 = env_list_to_array(mini->env);
