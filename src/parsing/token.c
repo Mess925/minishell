@@ -6,7 +6,7 @@
 /*   By: yocelynnns <yocelynnns@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 15:19:25 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/02/18 00:36:05 by yocelynnns       ###   ########.fr       */
+/*   Updated: 2025/02/22 00:54:11 by yocelynnns       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	handle_spaces(const char *input, t_lexer_state *state, \
 	state->start = state->i + 1;
 }
 
-void	handle_pipe(const char *input, t_lexer_state *state, t_minishell *mini)
+int	handle_pipe(const char *input, t_lexer_state *state, t_minishell *mini)
 {
 	char	*raw_token;
 	char	*processed_token;
@@ -58,7 +58,8 @@ void	handle_pipe(const char *input, t_lexer_state *state, t_minishell *mini)
 	{
 		fprintf(stderr,
 			"Error: Invalid sequence of consecutive '|' operators\n");
-		mini->exit = 217;
+		mini->exit = 2;
+		return (1);
 	}
 	state->last_token_was_pipe = 1;
 	if (state->i > state->start)
@@ -67,9 +68,11 @@ void	handle_pipe(const char *input, t_lexer_state *state, t_minishell *mini)
 		processed_token = first_processing(raw_token, mini);
 		add_token(&state->token_list, create_token(WORD, processed_token));
 		free(raw_token);
+		free(processed_token);
 	}
 	add_token(&state->token_list, create_token(PIPE, "|"));
 	state->start = state->i + 1;
+	return (0);
 }
 
 void	dollar_expan(char *processed_t, t_lexer_state *state)

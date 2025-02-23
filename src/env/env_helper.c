@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env_helper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysetiawa <ysetiawa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 15:09:48 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/02/18 15:10:59 by ysetiawa         ###   ########.fr       */
+/*   Updated: 2025/02/20 19:38:40 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+<<<<<<< HEAD
 void	handle_empty_env(t_minishell *mini)
 {
 	mini->env = malloc(3 * sizeof(t_env));
@@ -37,14 +38,32 @@ int	env_init(t_minishell *mini, char **env_array)
 		handle_empty_env(mini);
 		// return (1);
 	}
+=======
+void	put_env_i(char **env_array)
+{
+	char	cwd[PATH_MAX];
+
+	getcwd(cwd, PATH_MAX);
+	env_array[0] = ft_strjoin("PWD=", cwd);
+	env_array[1] = ft_strdup("SHLVL=1");
+	env_array[2] = ft_strdup("_=/usr/bin/env");
+	env_array[3] = NULL;
+}
+
+int	env_init(t_minishell *mini, char **env_array)
+{
+	if (!env_array || !env_array[0])
+		put_env_i(env_array);
+>>>>>>> 0212f4a445e27ba14db9ef4481938408690d1709
 	if (init_env_list(mini, env_array) != 0)
 		return (1);
-	mini->env2 = env_list_to_array(mini->env);
-	if (!mini->env2)
-	{
-		ft_putstr_fd("Error: Failed to convert env_var to array\n", STDERR);
-		return (1);
-	}
+	// mini->env2 = env_list_to_array(mini->env);
+	// printf("The mini->env2 is %s\n",mini->env2[0]);
+	// 	if (!mini->env2)
+	// {
+	// 	ft_putstr_fd("Error: Failed to convert env_var to array\n", STDERR);
+	// 	return (1);
+	// }
 	return (0);
 }
 

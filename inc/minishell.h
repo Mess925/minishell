@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yocelynnns <yocelynnns@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 15:51:40 by hthant            #+#    #+#             */
-/*   Updated: 2025/02/19 17:46:34 by hthant           ###   ########.fr       */
+/*   Updated: 2025/02/21 02:54:53 by yocelynnns       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,12 +152,12 @@ typedef struct s_heredoc
 	size_t		delimiter_length;
 }	t_heredoc;
 
-typedef struct s_signal
-{
-	int	sigint;
-}	t_signal;
+// typedef struct s_signal
+// {
+// 	int	g_sigint;
+// }	t_signal;
 
-extern t_signal	g_sig;
+extern int					g_sigint;
 
 int			main(int ac, char **av, char **env);
 t_minishell	*init_minishell(char **env);
@@ -205,7 +205,7 @@ void		handle_eof(char *line, t_minishell *mini);
 void		stop_signals(void);
 
 void		dollar_expan(char *processed_t, t_lexer_state *state);
-void		handle_pipe(const char *input, t_lexer_state *state, \
+int		handle_pipe(const char *input, t_lexer_state *state, \
 t_minishell *mini);
 void		handle_spaces(const char *input, t_lexer_state *state, \
 	t_minishell *mini);
@@ -215,7 +215,7 @@ int			checkquote(t_lexer_state *state, t_minishell *mini);
 char		*handle_backslash(t_process *proc);
 char		*handle_single_quote(t_process *proc);
 char		*handle_double_quote(t_process *proc, t_minishell *mini);
-char		*process_character(t_process *proc, t_minishell *mini);
+void		process_character(t_process *proc, t_minishell *mini);
 char		*first_processing(char *str, t_minishell *mini);
 
 t_ast_node	*parse_pipeline(t_token *tokens, t_minishell *mini, int i);
@@ -235,7 +235,7 @@ void		process_remaining_token(const char *input, t_lexer_state *state, \
 void		init_lexstate(t_lexer_state *state);
 int			checkpipe(const char *input, t_lexer_state *state, \
 t_minishell *mini);
-void		lexer_checks(const char *input, t_lexer_state *state, \
+int		lexer_checks(const char *input, t_lexer_state *state, \
 	t_minishell *mini);
 t_token		*lexer(const char *input, t_minishell *mini);
 
@@ -276,7 +276,7 @@ void		handle_child_process(t_ast_node *ast, t_minishell *mini, t_cmd *m);
 void		handle_fork_signals(t_minishell *mini, t_cmd *m);
 char		*get_executable_path(t_ast_node *ast, t_minishell *mini);
 char		*find_executable(char *cmd, t_minishell *mini);
-char		*check_directory(char *dir, char *cmd);
+char		*check_directory(char *dir, char *cmd, t_minishell *mini);
 char		*concat_path(char *dir, char *cmd);
 
 int			execute_pipeline(t_minishell *mini, t_ast_node *ast);
