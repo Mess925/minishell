@@ -6,7 +6,7 @@
 /*   By: yocelynnns <yocelynnns@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 00:48:44 by yocelynnns        #+#    #+#             */
-/*   Updated: 2025/02/17 23:47:04 by yocelynnns       ###   ########.fr       */
+/*   Updated: 2025/02/21 02:24:51 by yocelynnns       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,12 @@ int	handle_redirect(t_ast_node *cmd, t_token **tokens, t_minishell *mini)
 	}
 	attach_redirect(cmd, redirect_node);
 	if (redirect_node->redirect->type == HEREDOC)
-		cmd->command->heredoc = read_heredoc(redirect_node->redirect->file,
-				mini);
+	{
+		if (cmd->command->heredoc)
+			free(cmd->command->heredoc);
+		cmd->command->heredoc = read_heredoc(redirect_node-> \
+			redirect->file, mini);
+	}
 	return (1);
 }
 

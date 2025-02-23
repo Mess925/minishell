@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 17:51:00 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/02/19 17:26:51 by hthant           ###   ########.fr       */
+/*   Updated: 2025/02/20 17:15:09 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(int ac, char **av, char **env)
 	mini = init_minishell(env);
 	if (!mini)
 		return (EXIT_FAILURE);
-	print_welcome_message();
+	// print_welcome_message();
 	run_shell_loop(mini);
 	free_env(mini->env);
 	free_env_array(mini->env2);
@@ -87,7 +87,7 @@ int	main(int ac, char **av, char **env)
 // {
 // 	init_signals();
 // 	input = readline("minishell$ ");
-// 	if(g_sig.sigint == 1)
+// 	if(g_sigint == 1)
 // 		mini->exit = 130;
 // 	stop_signals();
 // 	prompt(input, mini);
@@ -111,7 +111,7 @@ int	main(int ac, char **av, char **env)
 // 		// init_loop(input, mini);
 // 		init_signals();
 // 		input = readline("minishell$ ");
-// 		if(g_sig.sigint == 1)
+// 		if(g_sigint == 1)
 // 			mini->exit = 130;
 // 		stop_signals();
 // 		prompt(input, mini);
@@ -167,7 +167,7 @@ int	main(int ac, char **av, char **env)
 // 	// print_sorted_env(mini.env);
 // 	while (1)
 // 	{
-// 		// signal(SIGINT, sig_int_handler);
+// 		// signal(g_sigint, sig_int_handler);
 // 		// signal(SIGQUIT, sig_quit_handler);
 
 // 		input = readline("minishell$ ");

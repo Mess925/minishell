@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 17:22:59 by yocelynnns        #+#    #+#             */
-/*   Updated: 2025/02/19 17:37:01 by hthant           ###   ########.fr       */
+/*   Updated: 2025/02/20 20:06:29 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,21 @@ char	*concat_path(char *dir, char *cmd)
 	return (full_path);
 }
 
-char	*check_directory(char *dir, char *cmd)
+char	*check_directory(char *dir, char *cmd, t_minishell *mini) // We need to use this function to check the permission of the direcory
 {
 	char	*full_path;
+	int		i;
 
 	full_path = concat_path(dir, cmd);
 	if (!full_path)
 		return (NULL);
-	if (access(full_path, X_OK) == 0)
+	i = access(full_path, X_OK);
+	if (i != 0)
+	{
+		// ft_putstr_fd("path: no such file or directory: ", STDERR);
+		mini->exit = 126;
+	}
+	if (i == 0)
 		return (full_path);
 	free(full_path);
 	return (NULL);
@@ -61,7 +68,7 @@ char	*find_executable(char *cmd, t_minishell *mini)
 	i = 0;
 	while (dirs[i] != NULL)
 	{
-		full_path = check_directory(dirs[i], cmd);
+		full_path = check_directory(dirs[i], cmd, mini);
 		if (full_path)
 		{
 			free_dirs(dirs);
@@ -83,6 +90,11 @@ char	*get_executable_path(t_ast_node *ast, t_minishell *mini)
 	{
 		if (access(command, X_OK) == 0)
 			return (command);
+		else
+		{
+			ft_putstr_fd(": no such file or directory. ", STDERR);
+			mini->exit = 126;
+		}
 	}
 	else
 	{
@@ -100,7 +112,7 @@ void	handle_fork_signals(t_minishell *mini, t_cmd *m)
 	signal = WTERMSIG(m->status);
 	if (signal == SIGINT)
 	{
-		g_sig.sigint = 1;
+		g_sigint = 1;
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		rl_on_new_line();
 	}
@@ -138,9 +150,9 @@ void	handle_fork_signals(t_minishell *mini, t_cmd *m)
 // 	if (WIFSIGNALED(m->status))
 // 	{
 // 		signal = WTERMSIG(m->status);
-// 		if (signal == SIGINT)
+// 		if (signal == g_sigint)
 // 		{
-// 			g_sig.sigint = 1;
+// 			g_sigint = 1;
 // 			mini->exit = 130;
 // 			ft_putstr_fd("\n", STDOUT_FILENO);
 // 			rl_on_new_line();
