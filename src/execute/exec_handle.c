@@ -99,13 +99,13 @@ t_heredoc	*init_heredoc(const char *delimiter)
 	hd = malloc(sizeof(t_heredoc));
 	if (!hd)
 	{
-		ft_putendl_fd("Malloc failed for heredoc", 2);
+		perror("malloc");
 		return (NULL);
 	}
 	hd->content = malloc(INITIAL_SIZE);
 	if (!hd->content)
 	{
-		ft_putendl_fd("Malloc failed for heredoc", 2);
+		perror("malloc");
 		free(hd);
 		return (NULL);
 	}

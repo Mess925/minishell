@@ -6,7 +6,7 @@
 /*   By: hthant <hthant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 17:51:00 by ysetiawa          #+#    #+#             */
-/*   Updated: 2025/02/20 17:15:09 by hthant           ###   ########.fr       */
+/*   Updated: 2025/02/24 15:54:48 by hthant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ t_minishell	*init_minishell(char **env)
 	{
 		ft_putstr_fd("Error: Failed to initialize environment variables\n", \
 			STDERR);
-		// free(mini);
-		// return (NULL);
+		free(mini);
+		return (NULL);
 	}
 	return (mini);
 }

@@ -12,40 +12,29 @@
 
 #include "../inc/minishell.h"
 
-void	handle_empty_env(t_minishell *mini)
+void	put_env_i(char **env_array)
 {
-	mini->env = malloc(3 * sizeof(t_env));
-	if (!mini->env)
-		return;
+	char	cwd[PATH_MAX];
 
-	mini->env[0].key = strdup("PWD");
-	mini->env[0].value = strdup("/home/hthant");
-
-	mini->env[1].key = strdup("SHLVL");
-	mini->env[1].value = strdup("1");
-
-	mini->env[2].key = strdup("_");
-	mini->env[2].value = strdup("/usr/bin/env");
+	getcwd(cwd, PATH_MAX);
+	env_array[0] = ft_strjoin("PWD=", cwd);
+	env_array[1] = ft_strdup("SHLVL=1");
+	env_array[2] = ft_strdup("_=/usr/bin/env");
+	env_array[3] = NULL;
 }
-
 
 int	env_init(t_minishell *mini, char **env_array)
 {
 	if (!env_array || !env_array[0])
-	{
-		ft_putendl_fd("env_array is empty or NULL.", 2);
-		handle_empty_env(mini);
-		// return (1);
-	}
+		put_env_i(env_array);
 	if (init_env_list(mini, env_array) != 0)
 		return (1);
-	// mini->env2 = env_list_to_array(mini->env);
-	// printf("The mini->env2 is %s\n",mini->env2[0]);
-	// 	if (!mini->env2)
-	// {
-	// 	ft_putstr_fd("Error: Failed to convert env_var to array\n", STDERR);
-	// 	return (1);
-	// }
+	mini->env2 = env_list_to_array(mini->env);
+	if (!mini->env2)
+	{
+		ft_putstr_fd("Error: Failed to convert env_var to array\n", STDERR);
+		return (1);
+	}
 	return (0);
 }
 

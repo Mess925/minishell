@@ -122,7 +122,6 @@ typedef struct s_env
 {
 	char			*value;
 	struct s_env	*next;
-	char			*key;
 }	t_env;
 
 typedef struct s_cmd
@@ -276,7 +275,7 @@ void		handle_child_process(t_ast_node *ast, t_minishell *mini, t_cmd *m);
 void		handle_fork_signals(t_minishell *mini, t_cmd *m);
 char		*get_executable_path(t_ast_node *ast, t_minishell *mini);
 char		*find_executable(char *cmd, t_minishell *mini);
-char		*check_directory(char *dir, char *cmd, t_minishell *mini);
+char		*check_directory(char *dir, char *cmd);
 char		*concat_path(char *dir, char *cmd);
 
 int			execute_pipeline(t_minishell *mini, t_ast_node *ast);
